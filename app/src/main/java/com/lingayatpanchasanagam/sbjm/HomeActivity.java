@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             case 2:
                 break;
             case 3:
-                Navigator.navigateToLingayatPanchasangam(this);
+                Navigator.navigateToLingayatPanchamsangamScreenActivity(this);
                 break;
             case 4:
                 break;

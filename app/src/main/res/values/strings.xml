@@ -10,4 +10,24 @@
         <item>Connect to SBJM</item>
     </string-array>
     <string name="title_activity_lingayat_panchasangam">LingayatPanchasangamActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kan1">ಲಿಂಗಾಯತ ಪಂಚಸಂಗಮ ಮಾಸ ಪತ್ರಿಕೆ</string>
+    <string name="kan2">ಪ್ರದಾನ ಸಂಪಾದಕರು</string>
+    <string name="sbjm_swamy">SBJM Swamy</string>
+    <string name="about_lps">About LPS</string>
+    <string name="sanchalakaru">Sanchalakaru</string>
+    <string name="registration">Registration</string>
+    <string name="list_of_members">List of members</string>
+    <string name="distName">District</string>
+    
+    <string name="noTeamMember">No Members Found</string>
+    <string name="noDist">No Districts Found</string>
+    
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="taluk">Taluk</string>
+    <string name="back">Back </string>
 </resources>

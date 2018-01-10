@@ -3,6 +3,7 @@ package com.lingayatpanchasanagam.sbjm.util;
 import android.content.Context;
 import android.content.Intent;
 
+import com.lingayatpanchasanagam.sbjm.LingayatPanchamsangamScreenActivity;
 import com.lingayatpanchasanagam.sbjm.LingayatPanchasangamActivity;
 import com.lingayatpanchasanagam.sbjm.ListOfMembersActivity;
 
@@ -22,4 +23,10 @@ public class Navigator {
         Intent intent = new Intent(context, ListOfMembersActivity.class);
         context.startActivity(intent);
     }
+
+    public static void navigateToLingayatPanchamsangamScreenActivity(Context context){
+        Intent intent = new Intent(context, LingayatPanchamsangamScreenActivity.class);
+        context.startActivity(intent);
+    }
+
 }
