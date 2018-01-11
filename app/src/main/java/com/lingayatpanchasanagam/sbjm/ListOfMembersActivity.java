@@ -29,12 +29,17 @@ public class ListOfMembersActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<Parent> populateData(){
+    private ArrayList<Parent> populateData()
+    {
         membersList = new ArrayList<>();
+        parent = new Parent();
+        parent.setDivisionName("VAibhav");
+        membersList.add(parent);
+
         for (int i =0; i< 6; i++) {
             members = new ArrayList<>();
             child = new Child();
-            child.setName("basavaraj");
+            child.setName("Vj");
             child.setNumber("9731276143");
             child.setTaluk("Bijapur");
             members.add(child);
