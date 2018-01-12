@@ -1,27 +1,25 @@
 package com.lingayatpanchasanagam.sbjm.fragments;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
 
-import com.lingayatpanchasanagam.sbjm.LingayatPanchamsangamScreenActivity;
 import com.lingayatpanchasanagam.sbjm.R;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +44,9 @@ public class LingayatPanchasangamFragment extends Fragment
     Fragment fragment;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    //shared preference
+    public static final String MyPREFERENCES = "userDetails" ;
+    SharedPreferences sharedpreferences;
 
 
     @Nullable
@@ -86,6 +87,30 @@ public class LingayatPanchasangamFragment extends Fragment
             }
         });
 
+
+        registrationBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View v)
+            {
+                sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+                if(Objects.equals(sharedpreferences.getString("isLoggedIn", null), "yes"))
+                {
+                    fragment = new TeamMembersDistrictsFragment();
+                    fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_frame, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+                else
+                {
+                    showToastMsgFun(getResources().getString(R.string.mustLoginError));
+                }
+            }
+        });
+
         listOfMembersBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -103,6 +128,19 @@ public class LingayatPanchasangamFragment extends Fragment
     }
 
 
+    //Toast Message Print Function
+    private void showToastMsgFun(String s)
+    {
+        View customToastroot =LayoutInflater.from(getContext()).inflate(R.layout.mycustom_toast, null);
+        TextView toastMsg = (TextView) customToastroot.findViewById(R.id.textView1);
+        toastMsg.setText(s);
+
+        Toast customtoast=new Toast(getContext());
+        customtoast.setView(customToastroot);
+        customtoast.setGravity(Gravity.BOTTOM,0,200);
+        customtoast.setDuration(Toast.LENGTH_SHORT);
+        customtoast.show();
+    }
 
 
 }

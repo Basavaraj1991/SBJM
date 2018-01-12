@@ -21,13 +21,37 @@
     <string name="registration">Registration</string>
     <string name="list_of_members">List of members</string>
     <string name="distName">District</string>
-    
+
     <string name="noTeamMember">No Members Found</string>
     <string name="noDist">No Districts Found</string>
-    
+
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="taluk">Taluk</string>
     <string name="back">Back </string>
+
+    <string name="loginTxt">Log In </string>
+    <string name="hintUserNameTxt">User Name</string>
+    <string name="hintPassword">Password</string>
+    <string name="mandatoryTxt">mandatory</string>
+    <string name="qtyShoundnotZeroTxt">Minimum Quanity should be 1</string>
+    <string name="invalidCredentialstxt">Invalid Credentials</string>
+    <string name="edit_username">Phone Number* </string>
+    <string name="edit_password">Password* </string>
+    <string name="button_login">Log In</string>
+    <string name="check_boxvalue">Remember me</string>
+
+
+    ///validation values
+    <string name="number_matches">Number should be 10 digits</string>
+    <string name="correct_password">Enter Correct Password</string>
+    <string name="mandtory_text">Mandtory</string>
+    <string name="invalidCredintialsTxt">Invalid Credentials</string>
+    <string name="noAccessTxt">You don\'t have access to proceed</string>
+    <string name="logout"> Logout</string>
+    <string name="Sign_In">Sign In</string>
+    <string name="noInternet">No internet connection</string>
+    <string name="mustLoginError">You must log in to add User</string>
+
 </resources>

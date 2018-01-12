@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lingayatpanchasanagam.sbjm">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,12 +29,18 @@
             android:name=".LingayatPanchasangamActivity"
             android:label="@string/title_activity_lingayat_panchasangam"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".ListOfMembersActivity" />
-
-        <activity android:name=".LingayatPanchamsangamScreenActivity"
+        <activity
+            android:name=".LingayatPanchamsangamScreenActivity"
             android:label=""
             android:theme="@style/AppThemeNew" />
+
+
+        <activity android:name=".LogInActivity"
+            android:label=""
+            android:theme="@style/AppThemeNew" >
+
+        </activity>
     </application>
 
 </manifest>

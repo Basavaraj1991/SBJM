@@ -1,24 +1,33 @@
 package com.lingayatpanchasanagam.sbjm;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lingayatpanchasanagam.sbjm.adapter.DashboardMenuAdapter;
 import com.lingayatpanchasanagam.sbjm.adapter.ViewPagerAdapter;
 import com.lingayatpanchasanagam.sbjm.callback.MenuClickCallback;
 import com.lingayatpanchasanagam.sbjm.util.Navigator;
 
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,8 +63,24 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     RecyclerView mMenuList;
     RecyclerView.LayoutManager layoutManager;
     DashboardMenuAdapter menuAdapter;
+
+
+
+    //shared preference
+    public static final String MyPREFERENCES = "userDetails" ;
+    SharedPreferences sharedpreferences;
+
+
+    //Wifi And Data check
+    ConnectivityManager connMgr;
+    android.net.NetworkInfo wifi ;
+    android.net.NetworkInfo mobile ;
+
+    private static long back_pressed;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,6 +104,11 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         mMenuList.setLayoutManager(layoutManager);
         menuAdapter = new DashboardMenuAdapter(this,getResources().getStringArray(R.array.menu_array),this);
         mMenuList.setAdapter(menuAdapter);
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+
+
     }
 
     private void setUiPageViewController() {
@@ -139,4 +169,134 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 break;
         }
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        super.onPrepareOptionsMenu(menu);
+
+        if(Objects.equals(sharedpreferences.getString("isLoggedIn", null), "yes"))
+        {
+            menu.findItem(R.id.logout).setVisible(true);
+            menu.findItem(R.id.sign_in_up).setVisible(false);
+        }
+        else
+        {
+            menu.findItem(R.id.sign_in_up).setVisible(true);
+            menu.findItem(R.id.logout).setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (item.getItemId() == R.id.sign_in_up)
+        {
+            connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert connMgr != null;
+            wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if( wifi.isConnected() || mobile.isConnected())
+            {
+                Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
+            else
+            {
+                showToastMsgFun(getResources().getString(R.string.noInternet));
+            }
+        }
+        else if (item.getItemId() == R.id.logout)
+        {
+            connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert connMgr != null;
+            wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if( wifi.isConnected() || mobile.isConnected())
+            {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("isLoggedIn","no");
+
+                editor.putString("memberId", "");
+                editor.putString("registeredOn", "");
+                editor.putString("name", "");
+                editor.putString("phone", "");
+                editor.putString("email", "");
+                editor.putString("talukId", "");
+                editor.putString("talukName", "");
+                editor.putString("districtId", "");
+                editor.putString("districtName", "");
+                editor.apply();
+
+
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+            else
+            {
+                showToastMsgFun(getResources().getString(R.string.noInternet));
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Toast Message Print Function
+    private void showToastMsgFun(String s) {
+        Context context = getApplicationContext();
+        LayoutInflater inflater = getLayoutInflater();
+        View customToastroot = inflater.inflate(R.layout.mycustom_toast, null);
+        TextView toastMsg = (TextView) customToastroot.findViewById(R.id.textView1);
+        toastMsg.setText(s);
+
+        Toast customtoast = new Toast(context);
+        customtoast.setView(customToastroot);
+        customtoast.setGravity(Gravity.BOTTOM, 0, 200);
+        customtoast.setDuration(Toast.LENGTH_SHORT);
+        customtoast.show();
+    }
+
+    // on back press exit the app
+    @Override
+    public void onBackPressed()
+    {
+        if (back_pressed + 2000 > System.currentTimeMillis())
+        {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
+    }
+
+
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+
 }
