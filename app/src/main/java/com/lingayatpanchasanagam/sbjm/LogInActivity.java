@@ -129,17 +129,18 @@ public class LogInActivity extends AppCompatActivity {
                     if( wifi.isConnected() || mobile.isConnected())
                     {
                         // API Integration
-
+                        progressBar = new ProgressDialog(LogInActivity.this,R.style.MyTheme);
+                        progressBar.setCancelable(false);
+                        progressBar.setIndeterminateDrawable(getResources().getDrawable(R.drawable.progress_bar_style));
+                        progressBar.show();
+                        
                         JSONObject cred = new JSONObject();
                         try
                         {
                             cred.put("phone", phoneNumber);
                             cred.put("password", password);
                             TypedInput input = new TypedByteArray("application/json", cred.toString().getBytes("UTF-8"));
-                            progressBar = new ProgressDialog(LogInActivity.this,R.style.MyTheme);
-                            progressBar.setCancelable(false);
-                            progressBar.setIndeterminateDrawable(getResources().getDrawable(R.drawable.progress_bar_style));
-                            progressBar.show();
+
 
                             loginApi.getAllLoginDetails(input,  new Callback<TeamMemberModule>()
                             {

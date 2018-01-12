@@ -97,7 +97,7 @@ public class LingayatPanchasangamFragment extends Fragment
 
                 if(Objects.equals(sharedpreferences.getString("isLoggedIn", null), "yes"))
                 {
-                    fragment = new TeamMembersDistrictsFragment();
+                    fragment = new AddUserFragment();
                     fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_frame, fragment);

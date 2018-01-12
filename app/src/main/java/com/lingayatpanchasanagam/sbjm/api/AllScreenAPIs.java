@@ -1,14 +1,11 @@
 package com.lingayatpanchasanagam.sbjm.api;
 
-import android.support.v7.util.SortedList;
-
 import com.lingayatpanchasanagam.sbjm.model.DistrictsModel;
 import com.lingayatpanchasanagam.sbjm.model.TeamMemberModule;
-import com.squareup.okhttp.Response;
 
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.Body;
-import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.mime.TypedInput;
 
@@ -23,4 +20,7 @@ public interface AllScreenAPIs
 
     @POST("/post_apis/getTeamMemberDetailsByDistrictId")
     void getTeamMembersByDistrict(@Body TypedInput input, Callback<TeamMemberModule> teamMemberModuleCallback);
+
+    @POST("/post_apis/addUserDetails")
+    void addUser(@Body TypedInput input, Callback<Response> responseCallback);
 }
