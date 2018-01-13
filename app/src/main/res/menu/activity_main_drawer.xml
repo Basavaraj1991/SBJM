@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homepage"
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/abt_panchamshali"
+            android:title="@string/about_panchamsali" />
+        <item
+            android:id="@+id/abt_peeta"
+            android:title="@string/about_peeta" />
+        <item
+            android:id="@+id/abt_sbjm"
+            android:title="@string/about_sbjm" />
+        <item
+            android:id="@+id/lingayat_panchamsangam"
+            android:title="@string/lingayat_panchamsangam" />
+        <item
+            android:id="@+id/social_connect"
+            android:title="@string/connect_to_sbjm" />
+    </group>
+
+
+
+</menu>

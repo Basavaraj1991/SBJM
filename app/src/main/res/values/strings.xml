@@ -15,7 +15,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="kan1">ಲಿಂಗಾಯತ ಪಂಚಸಂಗಮ ಮಾಸ ಪತ್ರಿಕೆ</string>
     <string name="kan2">ಪ್ರದಾನ ಸಂಪಾದಕರು</string>
-    <string name="sbjm_swamy">SBJM Swamy</string>
+    <string name="sbjm_swamy">SBJM Swamiji</string>
     <string name="about_lps">About LPS</string>
     <string name="sanchalakaru">Sanchalakaru</string>
     <string name="registration">Registration</string>
@@ -44,6 +44,7 @@
 
     ///validation values
     <string name="number_matches">Number should be 10 digits</string>
+    <string name="numempty">Number not available</string>
     <string name="correct_password">Enter Correct Password</string>
     <string name="mandtory_text">Mandtory</string>
     <string name="invalidCredintialsTxt">Invalid Credentials</string>
@@ -51,8 +52,9 @@
     <string name="logout"> Logout</string>
     <string name="Sign_In">Sign In</string>
     <string name="noInternet">No internet connection</string>
+    <string name="addedSoon">This function will be added soon</string>
     <string name="mustLoginError">You must log in to add User</string>
-    
+
     <string name="addUser">Add User</string>
     <string name="email">Email*</string>
     <string name="address">Address*</string>
@@ -60,6 +62,20 @@
     <string name="invalidEmailError">Invalid email format</string>
     <string name="emailPattern" tools:ignore="TypographyDashes">[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+[a-z]+</string>
     <string name="userAddedTxt">User added Successfully </string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="about_panchamsali">About Panchamsali</string>
+    <string name="about_peeta">About Peeta</string>
+    <string name="about_sbjm">About SBJM</string>
+    <string name="lingayat_panchamsangam">Lingayat Panchamsangam</string>
+    <string name="connect_to_sbjm">Connect to SBJM</string>
+    <string name="exitMsg">Press once again to exit!</string>
     
+    <string name="phoneadapter"><font fgcolor='#000'>Phone : </font></string>
+    <string name="emailadapter"><font fgcolor='#000'>Email : </font></string>
+    <string name="home">Home</string>
+
 
 </resources>

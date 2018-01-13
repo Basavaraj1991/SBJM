@@ -5,9 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +37,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, MenuClickCallback {
+public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, MenuClickCallback, NavigationView.OnNavigationItemSelectedListener {
 
     int currentPage = 0;
     int NUM_PAGES = 8;
@@ -107,11 +113,21 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
     }
 
-    private void setUiPageViewController() {
+
+
+    private void setUiPageViewController()
+    {
 
         dotsCount = mAdapter.getCount();
         dots = new ImageView[dotsCount];
@@ -155,19 +171,35 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onMenuItemClick(int position) {
         switch (position){
             case 0:
+                showToastMsgFun(getResources().getString(R.string.addedSoon));
                 break;
             case 1:
+                showToastMsgFun(getResources().getString(R.string.addedSoon));
                 break;
             case 2:
+                showToastMsgFun(getResources().getString(R.string.addedSoon));
                 break;
             case 3:
                 Navigator.navigateToLingayatPanchamsangamScreenActivity(this);
                 break;
             case 4:
+                socialConnectFun();
                 break;
             default:
+                showToastMsgFun(getResources().getString(R.string.addedSoon));
                 break;
         }
+    }
+
+
+
+    //Social connect
+    private void socialConnectFun()
+    {
+        String url = "https://www.facebook.com";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
 
@@ -254,6 +286,86 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+    @Override
+    public void onBackPressed()
+    {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START))
+        {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else
+        {
+            if (back_pressed + 2000 > System.currentTimeMillis())
+            {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+            else
+            {
+                showToastMsgFun(getResources().getString(R.string.exitMsg));
+            }
+            back_pressed = System.currentTimeMillis();
+        }
+    }
+
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.homepage)
+        {
+
+        }
+        else if (id == R.id.abt_panchamshali)
+        {
+            showToastMsgFun(getResources().getString(R.string.addedSoon));
+        }
+        else if (id == R.id.abt_peeta)
+        {
+            showToastMsgFun(getResources().getString(R.string.addedSoon));
+        }
+        else if (id == R.id.abt_sbjm)
+        {
+            showToastMsgFun(getResources().getString(R.string.addedSoon));
+        }
+        else if (id == R.id.lingayat_panchamsangam)
+        {
+            Navigator.navigateToLingayatPanchamsangamScreenActivity(this);
+        }
+        else if (id == R.id.social_connect)
+        {
+            socialConnectFun();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
+
+
+
     //Toast Message Print Function
     private void showToastMsgFun(String s) {
         Context context = getApplicationContext();
@@ -269,34 +381,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         customtoast.show();
     }
 
-    // on back press exit the app
-    @Override
-    public void onBackPressed()
-    {
-        if (back_pressed + 2000 > System.currentTimeMillis())
-        {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
-        }
-        else
-        {
-            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
-        }
-        back_pressed = System.currentTimeMillis();
-    }
 
-
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
-    }
 
 
 }

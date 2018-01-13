@@ -14,6 +14,7 @@
         <LinearLayout
             android:id="@+id/teamMembers_layout"
             android:orientation="vertical"
+            android:foreground="@drawable/ripple_effect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_6dp" >
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimen_16sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/phone" />
 
 
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimen_16sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/email" />
 
             <TextView

@@ -72,21 +72,27 @@ public class LingayatPanchasangamFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                String pdf = "http://gyantechsolutions.com/swamiji/about%20swamiji.pdf";
+               /* String pdf = "http://gyantechsolutions.com/swamiji/about%20swamiji.pdf";
                 String url = "http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf;
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
-
-               /* fragment = new AboutLPSFragment();
+*/
+                fragment = new AboutLPSFragment();
                 fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_frame, fragment);
                 fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();*/
+                fragmentTransaction.commit();
             }
         });
 
+        sanchalakaruBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToastMsgFun(getResources().getString(R.string.addedSoon));
+            }
+        });
 
         registrationBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
