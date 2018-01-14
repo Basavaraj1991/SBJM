@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lingayatpanchasanagam.sbjm.AboutUsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:actionMenuTextAppearance="@id/toolbar"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@color/white"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_below="@+id/appbar"
+        android:layout_margin="@dimen/dimen_10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/aboutPanchamsali"
+            android:text="@string/about_panchamsali"
+            android:textSize="@dimen/dimen_24sp"
+            android:textColor="@color/black_text"
+            android:background="@drawable/button_border"
+            android:padding="@dimen/dimen_5dp"
+            android:gravity="center"
+            android:layout_margin="@dimen/dimen_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/aboutSBJM"
+            android:text="@string/about_sbjm"
+            android:textSize="@dimen/dimen_24sp"
+            android:textColor="@color/black_text"
+            android:background="@drawable/button_border"
+            android:padding="@dimen/dimen_5dp"
+            android:gravity="center"
+            android:layout_margin="@dimen/dimen_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
