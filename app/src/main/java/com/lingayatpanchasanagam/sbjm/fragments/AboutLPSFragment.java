@@ -1,5 +1,7 @@
 package com.lingayatpanchasanagam.sbjm.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +37,7 @@ public class AboutLPSFragment extends Fragment
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
+    public ProgressDialog progressBar;
 
     @Nullable
     @Override
@@ -41,18 +45,34 @@ public class AboutLPSFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.fragment_about_l, container, false);
         ButterKnife.bind(this, rootView);
+
+        progressBar = new ProgressDialog(getActivity(),R.style.MyTheme);
+        progressBar.setCancelable(false);
+        progressBar.setIndeterminateDrawable(getResources().getDrawable(R.drawable.progress_bar_style));
+        progressBar.show();
+
         return rootView;
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
         webView.getSettings().setJavaScriptEnabled(true);
 
-        String pdf = "http://gyantechsolutions.com/swamiji/about%20swamiji.pdf";
-        webView.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
+
+        webView.loadUrl("https://cloudspace.idrsolutions.com:8181/HTML_Page_Extraction/output/19ac3d70-f4aa-4740-bcd7-f4e45b34ede2/about_swamiji/index.html?page=1");
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.dismiss();
+            }
+        }, 2000);
+
 
     }
 

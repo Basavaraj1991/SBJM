@@ -59,4 +59,6 @@
 
 
     <dimen name="shadow_size">8dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
 </resources>
