@@ -83,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     android.net.NetworkInfo mobile ;
 
     private static long back_pressed;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -171,19 +172,21 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onMenuItemClick(int position) {
         switch (position){
             case 0:
-                showToastMsgFun(getResources().getString(R.string.addedSoon));
+                startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                 break;
             case 1:
                 showToastMsgFun(getResources().getString(R.string.addedSoon));
                 break;
             case 2:
-                showToastMsgFun(getResources().getString(R.string.addedSoon));
+                url = "https://www.facebook.com";
+                openWebViewFun(url);
                 break;
             case 3:
                 Navigator.navigateToLingayatPanchamsangamScreenActivity(this);
                 break;
             case 4:
-                socialConnectFun();
+                url = "https://www.facebook.com";
+                openWebViewFun(url);
                 break;
             default:
                 showToastMsgFun(getResources().getString(R.string.addedSoon));
@@ -193,12 +196,11 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
 
 
-    //Social connect
-    private void socialConnectFun()
+    //Web view connect
+    private void openWebViewFun(String url)
     {
-        String url = "https://www.facebook.com";
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
+        Intent i = new Intent(this,WebviewActivity.class);
+        i.putExtra("link",url);
         startActivity(i);
     }
 
@@ -336,17 +338,19 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         {
 
         }
-        else if (id == R.id.abt_panchamshali)
+        else if (id == R.id.abt_us)
+        {
+            startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
+
+        }
+        else if (id == R.id.organizations)
         {
             showToastMsgFun(getResources().getString(R.string.addedSoon));
         }
-        else if (id == R.id.abt_peeta)
+        else if (id == R.id.our_leaders)
         {
-            showToastMsgFun(getResources().getString(R.string.addedSoon));
-        }
-        else if (id == R.id.abt_sbjm)
-        {
-            showToastMsgFun(getResources().getString(R.string.addedSoon));
+            url = "https://www.facebook.com";
+            openWebViewFun(url);
         }
         else if (id == R.id.lingayat_panchamsangam)
         {
@@ -354,7 +358,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
         else if (id == R.id.social_connect)
         {
-            socialConnectFun();
+            url = "https://www.facebook.com";
+            openWebViewFun(url);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

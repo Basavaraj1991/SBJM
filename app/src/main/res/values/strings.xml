@@ -3,9 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">ಲಿಂಗಾಯತ  ಪಂಚಸಂಗಮ</string>
     <string-array name="menu_array">
-        <item>About Panchamsali</item>
-        <item>About Peeta</item>
-        <item>About Basava Jaya Mrutunjaya(SBJM)</item>
+        <item>About Us</item>
+        <item>Organizations</item>
+        <item>Our Leaders</item>
         <item>Lingayat Panchasangam</item>
         <item>Connect to SBJM</item>
     </string-array>
@@ -72,10 +72,11 @@
     <string name="lingayat_panchamsangam">Lingayat Panchamsangam</string>
     <string name="connect_to_sbjm">Connect to SBJM</string>
     <string name="exitMsg">Press once again to exit!</string>
-    
+
     <string name="phoneadapter"><font fgcolor='#000'>Phone : </font></string>
     <string name="emailadapter"><font fgcolor='#000'>Email : </font></string>
     <string name="home">Home</string>
+    <string name="abtus">About Us</string>
 
 
 </resources>

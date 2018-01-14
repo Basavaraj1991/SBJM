@@ -81,7 +81,7 @@
                 android:text="@string/about_lps"/>
 
             <TextView
-                android:id="@+id/sanchalakaru"
+                android:id="@+id/listOfMembersTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -91,6 +91,9 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/button_border"
                 android:text="@string/sanchalakaru"/>
+
+
+
 
             <TextView
                 android:id="@+id/registration"
@@ -103,18 +106,6 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/button_border"
                 android:text="@string/registration"/>
-
-            <TextView
-                android:id="@+id/listOfMembersTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:gravity="center"
-                android:padding="@dimen/dimen_10dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_border"
-                android:text="@string/list_of_members"/>
 
 
         </LinearLayout>

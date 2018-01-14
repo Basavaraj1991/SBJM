@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lingayatpanchasanagam.sbjm.LogInActivity;
 import com.lingayatpanchasanagam.sbjm.R;
 
 import java.util.Objects;
@@ -31,9 +32,6 @@ public class LingayatPanchasangamFragment extends Fragment
 
     @BindView(R.id.aboutlps)
     TextView aboutlps;
-
-    @BindView(R.id.sanchalakaru)
-    TextView sanchalakaruBtn;
 
     @BindView(R.id.registration)
     TextView registrationBtn;
@@ -87,12 +85,6 @@ public class LingayatPanchasangamFragment extends Fragment
             }
         });
 
-        sanchalakaruBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showToastMsgFun(getResources().getString(R.string.addedSoon));
-            }
-        });
 
         registrationBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
@@ -113,6 +105,8 @@ public class LingayatPanchasangamFragment extends Fragment
                 else
                 {
                     showToastMsgFun(getResources().getString(R.string.mustLoginError));
+                    getContext().startActivity(new
+                            Intent(getContext(), LogInActivity.class));
                 }
             }
         });

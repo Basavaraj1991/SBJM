@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.lingayatpanchasanagam.sbjm.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Basavaraj Navi on 08/01/18.
  * Project SBJM
@@ -14,10 +17,11 @@ import com.lingayatpanchasanagam.sbjm.R;
 
 public class MenuHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.menuItem)
     public TextView menuItemTv;
 
     public MenuHolder(View itemView) {
         super(itemView);
-        menuItemTv = (TextView) itemView.findViewById(R.id.menuItem);
+        ButterKnife.bind(this,itemView);
     }
 }

@@ -63,8 +63,11 @@ public class AboutLPSFragment extends Fragment
         webView.getSettings().setJavaScriptEnabled(true);
 
 
-        webView.loadUrl("https://cloudspace.idrsolutions.com:8181/HTML_Page_Extraction/output/19ac3d70-f4aa-4740-bcd7-f4e45b34ede2/about_swamiji/index.html?page=1");
+        //webView.loadUrl("https://cloudspace.idrsolutions.com:8181/HTML_Page_Extraction/output/19ac3d70-f4aa-4740-bcd7-f4e45b34ede2/about_swamiji/index.html?page=1");
 
+        webView.loadUrl("https://cloudspace.idrsolutions.com:8181/HTML_Page_Extraction/output/b0c3f884-9b5a-43b4-8404-17679f69f389/inner_lps/index.html?page=1");
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
 
         new Handler().postDelayed(new Runnable() {
             @Override

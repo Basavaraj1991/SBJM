@@ -39,7 +39,14 @@
         <activity
             android:name=".LogInActivity"
             android:label=""
-            android:theme="@style/AppThemeNew"></activity>
+            android:theme="@style/AppThemeNew" />
+        <activity android:name=".WebviewActivity"
+            android:label=""
+            android:theme="@style/AppThemeNew" />
+
+        <activity android:name=".AboutUsActivity"
+            android:label=""
+            android:theme="@style/AppThemeNew" />
     </application>
 
 </manifest>

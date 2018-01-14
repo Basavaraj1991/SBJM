@@ -9,14 +9,14 @@
             android:title="@string/home" />
 
         <item
-            android:id="@+id/abt_panchamshali"
-            android:title="@string/about_panchamsali" />
+            android:id="@+id/abt_us"
+            android:title="@string/abtus" />
         <item
-            android:id="@+id/abt_peeta"
-            android:title="@string/about_peeta" />
+            android:id="@+id/organizations"
+            android:title="Organizations" />
         <item
-            android:id="@+id/abt_sbjm"
-            android:title="@string/about_sbjm" />
+            android:id="@+id/our_leaders"
+            android:title="Our Leaders" />
         <item
             android:id="@+id/lingayat_panchamsangam"
             android:title="@string/lingayat_panchamsangam" />
