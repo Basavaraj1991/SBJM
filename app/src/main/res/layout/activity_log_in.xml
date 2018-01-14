@@ -84,6 +84,17 @@
                 android:textSize="@dimen/dimen_16sp"
                 android:id="@+id/check_box"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnResetPwd"
+                android:layout_gravity="center|end"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:text="Reset Password"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/dimen_20sp" android:textAllCaps="false"/>
+
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,6 +106,8 @@
                 android:textSize="@dimen/dimen_20sp"
                 android:background="@color/colorPrimary"
                 android:textAllCaps="false"/>
+
+
 
         </LinearLayout>
     </ScrollView>
