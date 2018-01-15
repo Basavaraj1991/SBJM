@@ -1,5 +1,8 @@
 package com.lingayatpanchasanagam.sbjm.api;
 
+import com.squareup.okhttp.Response;
+
+import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -11,5 +14,5 @@ import retrofit.http.Path;
 
 public interface SMSApi {
     @GET("/{api_key}/SMS/{phone_number}/{otp}")
-    void sendSms(@Path("api_key") String  apikey, @Path("phone_number") String phoneNumber, @Path("otp") String otp );
+    void sendSms(@Path("api_key") String  apikey, @Path("phone_number") String phoneNumber, @Path("otp") String otp, Callback<Response> responseCallback);
 }

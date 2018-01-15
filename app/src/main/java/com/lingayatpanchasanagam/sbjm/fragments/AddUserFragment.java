@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,13 @@ public class AddUserFragment extends Fragment
 
     @BindView(R.id.addUser)
     Button addUserBtn;
+
+    @BindView(R.id.radioPrice)
+    RadioGroup radioPrice;
+
+    RadioButton radioButton;
+    int selectedId;
+    String price = "";
 
     String userName;
     String userPhone;
@@ -97,6 +106,19 @@ public class AddUserFragment extends Fragment
         sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         allScreenAPIs = ServiceGenerator.createService(AllScreenAPIs.class);
 
+        selectedId = radioPrice.getCheckedRadioButtonId();
+
+
+
+        radioPrice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                selectedId = radioPrice.getCheckedRadioButtonId();
+            }
+        });
+
+
         addUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +162,10 @@ public class AddUserFragment extends Fragment
         }
         else
         {
+            radioButton = (RadioButton) getActivity().findViewById(selectedId);
+
+            price = String.valueOf(radioButton.getText());
+
 
             connMgr = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             assert connMgr != null;
@@ -163,6 +189,7 @@ public class AddUserFragment extends Fragment
                     cred.put("email", userEmail);
                     cred.put("address", userAddress);
                     cred.put("subscription_details", userSubscriptionDetails);
+                    cred.put("price", price);
                     TypedInput input = new TypedByteArray("application/json", cred.toString().getBytes("UTF-8"));
 
 
@@ -171,15 +198,22 @@ public class AddUserFragment extends Fragment
                         @Override
                         public void success(Response response, Response response2)
                         {
+                            name.setText("");
+                            phone.setText("");
+                            email.setText("");
+                            address.setText("");
+                            subscription.setText("");
+
                             progressBar.dismiss();
                             showToastMsgFun(getResources().getString(R.string.userAddedTxt));
 
-                            fragment = new LingayatPanchasangamFragment();
+
+                            /*fragment = new LingayatPanchasangamFragment();
                             fragmentManager = getActivity().getSupportFragmentManager();
                             fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.fragment_frame, fragment);
                             fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
+                            fragmentTransaction.commit();*/
                         }
 
                         @Override

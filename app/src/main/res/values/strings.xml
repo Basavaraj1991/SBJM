@@ -40,6 +40,7 @@
     <string name="edit_password">Password* </string>
     <string name="button_login">Log In</string>
     <string name="check_boxvalue">Remember me</string>
+    <string name="passwordUpdated">Password Changed</string>
 
 
     ///validation values
@@ -77,6 +78,24 @@
     <string name="emailadapter"><font fgcolor='#000'>Email : </font></string>
     <string name="home">Home</string>
     <string name="abtus">About Us</string>
+    <string name="submit">Submit</string>
+    <string name="forgot_pass">Forgot Password..?  </string>
+    <string name="hintPhone"> Enter Mobile Number</string>
+    <string name="hintOtp"> Enter Received OTP</string>
+    <string name="proceedTxt">Proceed</string>
+    <string name="onlydigitsPattern">[0-9]+</string>
+    <string name="phoneNotReg">Incorrect Phone Number</string>
+    <string name="errorOnlyDigits">Input should contain Only Digits</string>
+    <string name="otpDigitError">Otp should be 6 digits</string>
+    <string name="mobileNumError">Mobile number should be 10 digits</string>
+    <string name="enter_new_password">Enter New Password</string>
 
 
+<string name="otpNotMatched">Otp Not Matched</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="choose_price">Choose Price</string>
+
+    <string name="radioPrice1">1,555</string>
+    <string name="radioPrice2">25,555</string>
+    <string name="radioPrice3">55,555</string>
 </resources>

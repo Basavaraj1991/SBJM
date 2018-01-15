@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 showToastMsgFun(getResources().getString(R.string.addedSoon));
                 break;
             case 2:
-                url = "https://www.facebook.com";
+                url = "http://gyantechsolutions.com/swamiji/our_leaders.jpg";
                 openWebViewFun(url);
                 break;
             case 3:
@@ -349,7 +349,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
         else if (id == R.id.our_leaders)
         {
-            url = "https://www.facebook.com";
+            url = "http://gyantechsolutions.com/swamiji/our_leaders.jpg";
             openWebViewFun(url);
         }
         else if (id == R.id.lingayat_panchamsangam)

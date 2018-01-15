@@ -1,5 +1,7 @@
 package com.lingayatpanchasanagam.sbjm;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,11 +20,17 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lingayatpanchasanagam.sbjm.api.ApiKey;
 import com.lingayatpanchasanagam.sbjm.api.LoginApi;
+import com.lingayatpanchasanagam.sbjm.api.SMSApi;
+import com.lingayatpanchasanagam.sbjm.model.ForgotPasswordOtpModule;
 import com.lingayatpanchasanagam.sbjm.model.TeamMemberModule;
+import com.lingayatpanchasanagam.sbjm.model.UpdatePasswordModule;
+import com.lingayatpanchasanagam.sbjm.service.SMSServiceGenerator;
 import com.lingayatpanchasanagam.sbjm.service.ServiceGenerator;
 
 import org.json.JSONObject;
@@ -74,6 +82,37 @@ public class LogInActivity extends AppCompatActivity {
     android.net.NetworkInfo wifi ;
     android.net.NetworkInfo mobile ;
 
+
+
+
+
+    private Context context;
+    AlertDialog.Builder builder;
+    AlertDialog dialog;
+    EditText phoneNum;
+    Button proceedBtn;
+    RelativeLayout forgotFirstrl;
+    RelativeLayout forgotSecondrl;
+    RelativeLayout newPassrl;
+    EditText updatePassword;
+    Button updateBtn;
+    TextView otpText;
+    EditText otpNum;
+    Button submitBtn;
+    String forgotPassPhoneNum;
+    String otpValue;
+
+    SMSApi smsApi;
+
+
+
+
+
+
+
+
+
+
     Random random;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,6 +123,7 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         loginApi = ServiceGenerator.createService(LoginApi.class);
+        smsApi = SMSServiceGenerator.createService(SMSApi.class);
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -95,21 +135,277 @@ public class LogInActivity extends AppCompatActivity {
         phoneNumber = loginPreferences.getString("username", null);
         password = loginPreferences.getString("password", null);
 
-        if (phoneNumber == (null)) {
-            editphoneNumber.setText("");
-        } else {
-            editphoneNumber.setText(phoneNumber);
-        }
 
-        if (password == (null)) {
-            editpassword.setText("");
-        } else {
-            editpassword.setText(password);
-        }
 
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        resetButton.setOnClickListener(new View.OnClickListener()
+        {
+            @SuppressLint("CutPasteId")
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+
+                builder = new AlertDialog.Builder(LogInActivity.this);
+                View forgotPassDialogView = LayoutInflater.from(LogInActivity.this).inflate(R.layout.fogot_password_dailog, null);
+                builder.setView(forgotPassDialogView);
+                phoneNum = (EditText) forgotPassDialogView.findViewById(R.id.phone);
+                proceedBtn = (Button) forgotPassDialogView.findViewById(R.id.proceedBtn);
+                forgotFirstrl = (RelativeLayout) forgotPassDialogView.findViewById(R.id.phonerl);
+                forgotSecondrl = (RelativeLayout) forgotPassDialogView.findViewById(R.id.otprl);
+                newPassrl = (RelativeLayout) forgotPassDialogView.findViewById(R.id.newPassrl);
+
+                otpText = (TextView) forgotPassDialogView.findViewById(R.id.otptext);
+                otpNum = (EditText) forgotPassDialogView.findViewById(R.id.phoneOtp);
+                submitBtn = (Button) forgotPassDialogView.findViewById(R.id.submitBtn);
+
+
+                updatePassword = (EditText) forgotPassDialogView.findViewById(R.id.newPassword);
+                updateBtn = (Button) forgotPassDialogView.findViewById(R.id.updatePassword);
+
+
+                dialog = builder.show();
+                dialog.setCanceledOnTouchOutside(false);
+
+                proceedBtn.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                        assert connMgr != null;
+                        wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                        mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+                        if( wifi.isConnected() || mobile.isConnected())
+                        {
+                            if(phoneNum.getText().toString().equals(""))
+                            {
+                                phoneNum.setError(context.getString(R.string.mandatoryTxt));
+                            }
+                            else
+                            {
+                                if(phoneNum.getText().toString().length() != 10)
+                                {
+                                    phoneNum.setError(context.getString(R.string.mobileNumError));
+                                }
+                                else
+                                {
+                                    if(phoneNum.getText().toString().matches(getString(R.string.onlydigitsPattern)))
+                                    {
+
+                                        forgotPassPhoneNum = phoneNum.getText().toString();
+
+
+                                        // API Integration
+                                        progressBar = new ProgressDialog(LogInActivity.this, R.style.MyTheme);
+                                        progressBar.setCancelable(false);
+                                        progressBar.setIndeterminateDrawable(getResources().getDrawable(R.drawable.progress_bar_style));
+                                        progressBar.show();
+
+                                        JSONObject cred = new JSONObject();
+                                        try
+                                        {
+                                            cred.put("phone", forgotPassPhoneNum);
+                                            TypedInput input = new TypedByteArray("application/json", cred.toString().getBytes("UTF-8"));
+
+
+                                            loginApi.checkPhoneExistOrNot(input, new Callback<ForgotPasswordOtpModule>()
+                                            {
+
+
+                                                @SuppressLint("SetTextI18n")
+                                                @Override
+                                                public void success(ForgotPasswordOtpModule forgotPasswordOtpModule, Response response)
+                                                {
+
+
+                                                    if (forgotPasswordOtpModule.isSuccess())
+                                                    {
+                                                        otpValue = String.valueOf(forgotPasswordOtpModule.getOtp());
+                                                        progressBar.dismiss();
+
+
+                                                        smsApi.sendSms(ApiKey.SMS_API_KEY, forgotPassPhoneNum, otpValue, new Callback<com.squareup.okhttp.Response>() {
+                                                            @Override
+                                                            public void success(com.squareup.okhttp.Response response, Response response2) {
+
+                                                            }
+
+                                                            @Override
+                                                            public void failure(RetrofitError error) {
+
+                                                            }
+                                                        });
+
+
+
+
+                                                        otpText.setText("We Have Sent Otp to your Number "+phoneNum.getText().toString().substring(0,2)+"******"+phoneNum.getText().toString().substring(phoneNum.getText().toString().length() -2));
+                                                        forgotFirstrl.setVisibility(View.GONE);
+                                                        phoneNum.setVisibility(View.GONE);
+                                                        proceedBtn.setVisibility(View.GONE);
+                                                        forgotSecondrl.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+                                                        Log.d("otpFP", otpValue);
+
+                                                    }
+                                                    else
+                                                    {
+                                                        progressBar.dismiss();
+                                                        dialog.cancel();
+                                                        showToastMsgFun(getResources().getString(R.string.phoneNotReg));
+                                                    }
+
+
+
+
+                                                }
+
+                                                @Override
+                                                public void failure(RetrofitError error)
+                                                {
+                                                    progressBar.dismiss();
+                                                    dialog.cancel();
+                                                    showToastMsgFun(getResources().getString(R.string.phoneNotReg));
+                                                }
+                                            });
+
+                                        }
+                                        catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        phoneNum.setError(context.getString(R.string.errorOnlyDigits));
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            showToastMsgFun(getResources().getString(R.string.noInternet));
+                            dialog.cancel();
+                        }
+
+                    }
+                });
+
+                submitBtn.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                            if (otpNum.getText().toString().equals(""))
+                            {
+                                otpNum.setError(getString(R.string.mandatoryTxt));
+                            }
+                            else
+                            {
+                                if (otpNum.getText().toString().length() != 6)
+                                {
+                                    otpNum.setError(getString(R.string.otpDigitError));
+                                }
+                                else
+                                {
+                                    if (otpNum.getText().toString().matches(getString(R.string.onlydigitsPattern)))
+                                    {
+
+                                        if(otpNum.getText().toString().equals(otpValue))
+                                        {
+                                            forgotSecondrl.setVisibility(View.GONE);
+                                            newPassrl.setVisibility(View.VISIBLE);
+                                        }
+                                        else
+                                        {
+                                            otpNum.setError(getString(R.string.otpNotMatched));
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        otpNum.setError(getString(R.string.errorOnlyDigits));
+                                    }
+                                }
+                            }
+
+                    }
+                });
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (updatePassword.getText().toString().equals(""))
+                        {
+                            updatePassword.setError(getString(R.string.mandatoryTxt));
+                        }
+                        else
+                        {
+
+                            connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            assert connMgr != null;
+                            wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                            mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+                            if (wifi.isConnected() || mobile.isConnected())
+                            {
+                                // API Integration
+                                progressBar = new ProgressDialog(LogInActivity.this, R.style.MyTheme);
+                                progressBar.setCancelable(false);
+                                progressBar.setIndeterminateDrawable(getResources().getDrawable(R.drawable.progress_bar_style));
+                                progressBar.show();
+
+                                JSONObject cred = new JSONObject();
+                                try
+                                {
+                                    cred.put("phone", forgotPassPhoneNum);
+                                    cred.put("password", updatePassword.getText());
+                                    TypedInput input = new TypedByteArray("application/json", cred.toString().getBytes("UTF-8"));
+
+
+                                    loginApi.updatePassword(input, new Callback<UpdatePasswordModule>()
+                                    {
+
+                                        @Override
+                                        public void success(UpdatePasswordModule updatePasswordModule, Response response) {
+                                            progressBar.dismiss();
+                                            dialog.cancel();
+                                            showToastMsgFun(getString(R.string.passwordUpdated));
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+                                            progressBar.dismiss();
+                                            dialog.cancel();
+                                            Log.d("error", String.valueOf(error));
+                                        }
+                                    });
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            } else {
+                                showToastMsgFun(getResources().getString(R.string.noInternet));
+                            }
+
+
+
+
+
+                        }
+                    }
+                });
+
+
+
 
             }
         });
