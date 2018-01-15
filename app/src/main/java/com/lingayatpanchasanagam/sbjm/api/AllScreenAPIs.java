@@ -1,11 +1,13 @@
 package com.lingayatpanchasanagam.sbjm.api;
 
 import com.lingayatpanchasanagam.sbjm.model.DistrictsModel;
+import com.lingayatpanchasanagam.sbjm.model.SlideImages;
 import com.lingayatpanchasanagam.sbjm.model.TeamMemberModule;
 
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.mime.TypedInput;
 
@@ -23,4 +25,7 @@ public interface AllScreenAPIs
 
     @POST("/post_apis/addUserDetails")
     void addUser(@Body TypedInput input, Callback<Response> responseCallback);
+
+    @POST("/get_apis/getSliderImages")
+    void getAllImages(@Body TypedInput input, Callback<SlideImages> responseCallback);
 }

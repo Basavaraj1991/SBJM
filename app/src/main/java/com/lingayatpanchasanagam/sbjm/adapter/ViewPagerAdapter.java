@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.lingayatpanchasanagam.sbjm.R;
+import com.lingayatpanchasanagam.sbjm.model.SlideImages;
 
 
 /**
@@ -24,15 +26,18 @@ public class ViewPagerAdapter extends PagerAdapter
 
     private Context mContext;
     private int[] mResources;
+    private SlideImages slideImages;
 
-    public ViewPagerAdapter(Context mContext, int[] mResources) {
+    public ViewPagerAdapter(Context mContext, SlideImages slideImages) {
         this.mContext = mContext;
-        this.mResources = mResources;
+        this.slideImages = slideImages;
     }
 
     @Override
     public int getCount() {
-        return mResources.length;
+        if (slideImages.getSliderImages()!=null) {
+            return slideImages.getSliderImages().size();
+        }else return 1;
     }
 
     @Override
@@ -45,7 +50,17 @@ public class ViewPagerAdapter extends PagerAdapter
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.pager_item, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.img_pager_item);
-        imageView.setImageResource(mResources[position]);
+        //imageView.setImageResource(mResources[position]);
+        if (slideImages.getSliderImages()!=null) {
+            Glide.with(mContext)
+                    .load(slideImages.getSliderImages().get(position).getLink())
+                    .placeholder(R.drawable.splash_image)
+                    .error(R.drawable.splash_image)
+                    .into(imageView);
+        }else {
+            imageView.setImageResource(R.drawable.splash_image);
+        }
+
         container.addView(itemView);
 
         return itemView;
