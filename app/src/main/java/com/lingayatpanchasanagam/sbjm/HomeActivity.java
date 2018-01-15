@@ -1,7 +1,6 @@
 package com.lingayatpanchasanagam.sbjm;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,28 +29,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lingayatpanchasanagam.sbjm.adapter.DashboardMenuAdapter;
-import com.lingayatpanchasanagam.sbjm.adapter.TeamMembersDistrictsAdapter;
 import com.lingayatpanchasanagam.sbjm.adapter.ViewPagerAdapter;
-import com.lingayatpanchasanagam.sbjm.api.AllScreenAPIs;
-import com.lingayatpanchasanagam.sbjm.api.TeamMemberInteractive;
 import com.lingayatpanchasanagam.sbjm.callback.MenuClickCallback;
-import com.lingayatpanchasanagam.sbjm.fragments.TeamMembersFragment;
-import com.lingayatpanchasanagam.sbjm.model.DistrictsModel;
-import com.lingayatpanchasanagam.sbjm.model.SlideImages;
-import com.lingayatpanchasanagam.sbjm.service.ServiceGenerator;
 import com.lingayatpanchasanagam.sbjm.util.Navigator;
-
-import org.json.JSONObject;
 
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
-import retrofit.mime.TypedInput;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, MenuClickCallback, NavigationView.OnNavigationItemSelectedListener {
 
@@ -72,12 +55,21 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     };
     Handler handler = new Handler();
+    private int[] mImageResources = {
+            R.drawable.swamy1,
+            R.drawable.swamy2,
+            R.drawable.swamy3,
+            R.drawable.swamy5,
+            R.drawable.swamy6,
+            R.drawable.swamy7,
+            R.drawable.swamy8,
+            R.drawable.swamy9
+    };
 
     RecyclerView mMenuList;
     RecyclerView.LayoutManager layoutManager;
     DashboardMenuAdapter menuAdapter;
-    public ProgressDialog progressBar;
-    AllScreenAPIs allScreenAPIs;
+
 
 
     //shared preference
@@ -98,14 +90,12 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        allScreenAPIs = ServiceGenerator.createService(AllScreenAPIs.class);
-        getImages();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         mMenuList = (RecyclerView) findViewById(R.id.menuList);
-       /* mAdapter = new ViewPagerAdapter(this, new SlideImages());
+        mAdapter = new ViewPagerAdapter(this, mImageResources);
         intro_images.setAdapter(mAdapter);
         intro_images.setCurrentItem(0);
         intro_images.setOnPageChangeListener(this);
@@ -115,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             public void run() {
                 handler.post(update);
             }
-        }, 100, 2000);*/
+        }, 100, 2000);
         layoutManager = new LinearLayoutManager(this);
         mMenuList.setHasFixedSize(true);
         mMenuList.setLayoutManager(layoutManager);
@@ -129,6 +119,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -212,43 +203,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         i.putExtra("link",url);
         startActivity(i);
     }
-
-    private void getImages()
-    {
-        JSONObject cred = new JSONObject();
-        try
-        {
-            TypedInput input = new TypedByteArray("application/json", cred.toString().getBytes("UTF-8"));
-            allScreenAPIs.getAllImages(input,  new Callback<SlideImages>() {
-                @Override
-                public void success(SlideImages slideImages, Response response) {
-                    Log.d("img", "success" + response.getBody().toString());
-                    mAdapter = new ViewPagerAdapter(HomeActivity.this, slideImages);
-                    intro_images.setAdapter(mAdapter);
-                    intro_images.setCurrentItem(0);
-                    intro_images.setOnPageChangeListener(HomeActivity.this);
-                    setUiPageViewController();
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            handler.post(update);
-                        }
-                    }, 100, 2000);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.d("img", "error");
-                }
-
-            });
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
 
 
     @Override

@@ -30,7 +30,7 @@ public class DashboardMenuAdapter extends RecyclerView.Adapter<MenuHolder> {
 
     @Override
     public MenuHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu_list,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_menu_list,parent,false);
         MenuHolder holder = new MenuHolder(view);
         return holder;
     }
